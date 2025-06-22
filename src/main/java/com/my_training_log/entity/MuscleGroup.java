@@ -8,6 +8,7 @@ import org.hibernate.annotations.UuidGenerator;
 import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -27,8 +28,13 @@ public class MuscleGroup {
     @NotNull @NotBlank
     private String name;
 
+
+    @OneToMany(mappedBy = "muscleGroup")
+    private List<Muscle> muscles;
+
     @Version
     private Integer version;
     private LocalDateTime creationDate;
     private LocalDateTime lastUpdateDate;
+
 }

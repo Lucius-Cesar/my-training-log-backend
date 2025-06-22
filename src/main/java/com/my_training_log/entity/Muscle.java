@@ -2,6 +2,7 @@ package com.my_training_log.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -9,6 +10,7 @@ import org.hibernate.annotations.UuidGenerator;
 import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -28,7 +30,34 @@ public class Muscle {
     @NotNull @NotBlank
     private String name;
 
-    private UUID muscleGroupId;
+    @ManyToOne
+    private MuscleGroup muscleGroup;
+
+    @ManyToMany
+    @JoinTable(
+            name = "muscle_reference_exercice",
+            joinColumns = @JoinColumn(name = "muscle_id"),
+            inverseJoinColumns = @JoinColumn(name = "exercice_id")
+    )
+    private List<Exercice> referenceExercices;
+
+    @ManyToMany
+    @JoinTable(
+            name = "muscle_primary_exercice",
+            joinColumns = @JoinColumn(name = "muscle_id"),
+            inverseJoinColumns = @JoinColumn(name = "exercice_id")
+    )
+    private List<Exercice> primaryEngagedInExercices;
+
+    @ManyToMany
+    @JoinTable(
+            name = "muscle_secondary_exercice",
+            joinColumns = @JoinColumn(name = "muscle_id"),
+            inverseJoinColumns = @JoinColumn(name = "exercice_id")
+    )
+    private List<Exercice> secondaryEngagedInExercices;
+
+
 
     @Version
     private Integer version;

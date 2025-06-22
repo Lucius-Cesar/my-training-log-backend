@@ -33,10 +33,30 @@ public class Exercice {
     private String description;
 
     @NotEmpty @NotNull
+    @ManyToMany
+    @JoinTable(
+            name = "exercice_reference_muscle",
+            joinColumns = @JoinColumn(name = "exercice_id"),
+            inverseJoinColumns = @JoinColumn(name = "muscle_id")
+    )
     private List<UUID> referenceMuscles;
+
     @NotEmpty @NotNull
-    private List <UUID> primaryMusclesEngaged;
-    private List <UUID> secondaryMusclesEngaged;
+    @ManyToMany
+    @JoinTable(
+            name = "exercice_primary_muscle",
+            joinColumns = @JoinColumn(name = "exercice_id"),
+            inverseJoinColumns = @JoinColumn(name = "muscle_id")
+    )
+    private List <Muscle> primaryMusclesEngaged;
+    @NotEmpty @NotNull @OneToMany(mappedBy = "Muscle")
+    @ManyToMany
+    @JoinTable(
+            name = "exercice_secondary_muscle",
+            joinColumns = @JoinColumn(name = "exercice_id"),
+            inverseJoinColumns = @JoinColumn(name = "muscle_id")
+    )
+    private List <Muscle> secondaryMusclesEngaged;
 
     @Version
     private Integer version;
