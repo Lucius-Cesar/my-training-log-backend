@@ -6,6 +6,6 @@ import org.mapstruct.Mapper;
 
 @Mapper
 public interface ExerciceMapper {
-    ExerciceDto exerciceToExerciceDto(Exercice exercice);
-    Exercice exerciceDtoToExercice(ExerciceDto exerciceDto);
+    ExerciceDto toDto(Exercice exercice);
+    Exercice toEntity (ExerciceDto exerciceDto);
 }

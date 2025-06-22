@@ -6,6 +6,7 @@ import org.mapstruct.Mapper;
 
 @Mapper
 public interface MuscleGroupMapper {
-    MuscleGroupDto MuscleGroupToMuscleGroupDto(MuscleGroup muscleGroup);
-    MuscleGroup MuscleGroupDtoToMuscleGroup(MuscleGroup muscleGroup);
+    MuscleGroupDto toDto (MuscleGroup muscleGroup);
+    MuscleGroup toEntity (MuscleGroupDto muscleGroupDto);
+
 }

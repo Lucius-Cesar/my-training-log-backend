@@ -27,21 +27,21 @@ public class Exercice {
     @Column(length = 36, columnDefinition = "varchar(36)", updatable = false, nullable = false)
     private UUID id;
 
-    @NotNull @NotBlank
+    @NotBlank
     private String name;
 
     private String description;
 
-    @NotEmpty @NotNull
+    @NotEmpty
     @ManyToMany
     @JoinTable(
             name = "exercice_reference_muscle",
             joinColumns = @JoinColumn(name = "exercice_id"),
             inverseJoinColumns = @JoinColumn(name = "muscle_id")
     )
-    private List<UUID> referenceMuscles;
+    private List<Muscle> referenceMuscles;
 
-    @NotEmpty @NotNull
+    @NotEmpty
     @ManyToMany
     @JoinTable(
             name = "exercice_primary_muscle",
@@ -49,7 +49,6 @@ public class Exercice {
             inverseJoinColumns = @JoinColumn(name = "muscle_id")
     )
     private List <Muscle> primaryMusclesEngaged;
-    @NotEmpty @NotNull @OneToMany(mappedBy = "Muscle")
     @ManyToMany
     @JoinTable(
             name = "exercice_secondary_muscle",

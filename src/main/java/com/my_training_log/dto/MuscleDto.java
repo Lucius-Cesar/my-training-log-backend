@@ -13,10 +13,12 @@ import java.util.UUID;
 public class MuscleDto {
     private UUID id;
 
-    @NotNull @NotBlank
+    @NotBlank
     private String name;
 
-    private UUID muscleGroupId;
+    @NotBlank
+
+    private MuscleGroupDto muscleGroup;
 
     private Integer version;
     private LocalDateTime creationDate;

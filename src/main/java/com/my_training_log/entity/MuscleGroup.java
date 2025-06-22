@@ -1,7 +1,6 @@
 package com.my_training_log.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UuidGenerator;
@@ -25,7 +24,7 @@ public class MuscleGroup {
     @Column(length = 36, columnDefinition = "varchar(36)", updatable = false, nullable = false)
     private UUID id;
 
-    @NotNull @NotBlank
+    @NotBlank
     private String name;
 
 

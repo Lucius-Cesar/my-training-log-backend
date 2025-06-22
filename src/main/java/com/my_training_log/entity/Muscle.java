@@ -27,7 +27,7 @@ public class Muscle {
     @Column(length = 36, columnDefinition = "varchar(36)", updatable = false, nullable = false)
     private UUID id;
 
-    @NotNull @NotBlank
+    @NotBlank
     private String name;
 
     @ManyToOne
