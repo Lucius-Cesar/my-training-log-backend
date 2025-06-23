@@ -1,8 +1,7 @@
 package com.my_training_log.dto;
 
+import com.my_training_log.entity.Muscle;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,14 +13,13 @@ import java.util.UUID;
 @Data
 public class MuscleGroupDto {
     private UUID id;
-
     @NotBlank
     private String name;
 
-    private Integer version;
+    @NotBlank
+    private List <MuscleDto> muscles;
 
-    @NotEmpty
-    private List<MuscleDto> muscles;
+    private Integer version;
     private LocalDateTime creationDate;
     private LocalDateTime lastUpdateDate;
 }

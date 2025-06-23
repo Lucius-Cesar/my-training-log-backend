@@ -17,7 +17,6 @@ public class MuscleDto {
     private String name;
 
     @NotBlank
-
     private MuscleGroupDto muscleGroup;
 
     private Integer version;

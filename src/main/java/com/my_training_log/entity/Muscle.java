@@ -33,35 +33,8 @@ public class Muscle {
     @ManyToOne
     private MuscleGroup muscleGroup;
 
-    @ManyToMany
-    @JoinTable(
-            name = "muscle_reference_exercice",
-            joinColumns = @JoinColumn(name = "muscle_id"),
-            inverseJoinColumns = @JoinColumn(name = "exercice_id")
-    )
-    private List<Exercice> referenceExercices;
-
-    @ManyToMany
-    @JoinTable(
-            name = "muscle_primary_exercice",
-            joinColumns = @JoinColumn(name = "muscle_id"),
-            inverseJoinColumns = @JoinColumn(name = "exercice_id")
-    )
-    private List<Exercice> primaryEngagedInExercices;
-
-    @ManyToMany
-    @JoinTable(
-            name = "muscle_secondary_exercice",
-            joinColumns = @JoinColumn(name = "muscle_id"),
-            inverseJoinColumns = @JoinColumn(name = "exercice_id")
-    )
-    private List<Exercice> secondaryEngagedInExercices;
-
-
-
     @Version
     private Integer version;
-
     private LocalDateTime createdDate;
     private LocalDateTime updateDate;
 }

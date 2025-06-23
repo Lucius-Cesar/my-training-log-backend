@@ -1,12 +1,9 @@
 package com.my_training_log.dto;
 
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Data;
-import org.hibernate.annotations.NotFound;
-import jakarta.validation.constraints.NotNull;
 
 
 import java.time.LocalDateTime;
@@ -25,10 +22,12 @@ public class ExerciceDto {
     private String description;
 
     @NotEmpty
-    private List<MuscleDto> referenceMuscles;
+    private List<MuscleGroupDto> referenceMuscleGroups;
     @NotEmpty
-    private List <MuscleDto> primaryMusclesEngaged;
-    private List <MuscleDto> secondaryMusclesEngaged;
+    private List <MuscleGroupDto> primaryMuscleGroups;
+    private List <MuscleGroupDto> secondaryMuscleGroups;
+
+    private List <MuscleDto> specificMuscleTarget;
 
     private Integer version;
     private LocalDateTime creationDate;

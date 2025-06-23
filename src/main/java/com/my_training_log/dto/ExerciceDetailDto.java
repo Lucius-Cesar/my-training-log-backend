@@ -1,5 +1,6 @@
-package com.my_training_log.dto;
+/*package com.my_training_log.dto;
 
+import com.my_training_log.entity.MuscleGroup;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
@@ -19,13 +20,15 @@ public class ExerciceDetailDto {
         private String description;
 
         @NotEmpty
-        private List<MuscleDto> referenceMuscles;
+        private List<MuscleGroupDto> referenceMuscleGroups;
         @NotEmpty
-        private List <MuscleDto> primaryMusclesEngaged;
-        private List <MuscleDto> secondaryMusclesEngaged;
+        private List <MuscleGroupDto> primaryMusclesGroups;
+        private List <MuscleGroupDto> secondaryMuscleGroups;
+        private List <MuscleDto> specificMuscleTarget;
 
         private Integer version;
         private LocalDateTime creationDate;
         private LocalDateTime lastUpdateDate;
 
 }
+*/

@@ -1,10 +1,10 @@
 package com.my_training_log.entity;
 
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UuidGenerator;
 import org.hibernate.type.SqlTypes;
@@ -35,29 +35,37 @@ public class Exercice {
     @NotEmpty
     @ManyToMany
     @JoinTable(
-            name = "exercice_reference_muscle",
+            name = "exercice_reference_muscle_group",
             joinColumns = @JoinColumn(name = "exercice_id"),
-            inverseJoinColumns = @JoinColumn(name = "muscle_id")
+            inverseJoinColumns = @JoinColumn(name = "muscle_group_id")
     )
-    private List<Muscle> referenceMuscles;
+    private List<MuscleGroup> referenceMuscleGroups;
 
     @NotEmpty
     @ManyToMany
     @JoinTable(
-            name = "exercice_primary_muscle",
+            name = "exercice_pirmary_muscle_group",
             joinColumns = @JoinColumn(name = "exercice_id"),
-            inverseJoinColumns = @JoinColumn(name = "muscle_id")
+            inverseJoinColumns = @JoinColumn(name = "muscle_group_id")
     )
-    private List <Muscle> primaryMusclesEngaged;
+    private List <MuscleGroup> primaryMuscleGroups;
+
     @ManyToMany
     @JoinTable(
-            name = "exercice_secondary_muscle",
+            name = "exercice_secondary_muscle_group",
+            joinColumns = @JoinColumn(name = "exercice_id"),
+            inverseJoinColumns = @JoinColumn(name = "muscle_group_id")
+    )
+    private List <MuscleGroup> secondaryMuscleGroups;
+
+    @ManyToMany
+    @JoinTable(
+            name = "exercice_specific_muscle_target",
             joinColumns = @JoinColumn(name = "exercice_id"),
             inverseJoinColumns = @JoinColumn(name = "muscle_id")
     )
-    private List <Muscle> secondaryMusclesEngaged;
+    private List <Muscle> specificMuscleTargets;
 
-    @Version
     private Integer version;
     private LocalDateTime creationDate;
     private LocalDateTime lastUpdateDate;
