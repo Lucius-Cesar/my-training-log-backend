@@ -5,12 +5,16 @@ import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UuidGenerator;
 import org.hibernate.type.SqlTypes;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,6 +29,7 @@ public class MuscleGroup {
     private UUID id;
 
     @NotBlank
+    @Column(unique = true)
     private String name;
 
 
@@ -33,7 +38,11 @@ public class MuscleGroup {
 
     @Version
     private Integer version;
-    private LocalDateTime creationDate;
-    private LocalDateTime lastUpdateDate;
+
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdDate;
+    @LastModifiedDate
+    private LocalDateTime lastModifiedDate;
 
 }

@@ -27,7 +27,7 @@ public class ExerciceDto {
     private List <MuscleGroupDto> primaryMuscleGroups;
     private List <MuscleGroupDto> secondaryMuscleGroups;
 
-    private List <MuscleDto> specificMuscleTarget;
+    private List <MuscleDto> specificMusclesInGroup	;
 
     private Integer version;
     private LocalDateTime creationDate;

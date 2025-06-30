@@ -8,12 +8,17 @@ import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UuidGenerator;
 import org.hibernate.type.SqlTypes;
+import org.hibernate.validator.constraints.UniqueElements;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -44,7 +49,7 @@ public class Exercice {
     @NotEmpty
     @ManyToMany
     @JoinTable(
-            name = "exercice_pirmary_muscle_group",
+            name = "exercice_primary_muscle_group",
             joinColumns = @JoinColumn(name = "exercice_id"),
             inverseJoinColumns = @JoinColumn(name = "muscle_group_id")
     )
@@ -64,9 +69,17 @@ public class Exercice {
             joinColumns = @JoinColumn(name = "exercice_id"),
             inverseJoinColumns = @JoinColumn(name = "muscle_id")
     )
-    private List <Muscle> specificMuscleTargets;
 
+    // only if there is specific muscle of the muscle group targeted in the exercice
+    // e.g. only the long head of the triceps is targeted in pull-up movements.
+    private List <Muscle> specificMusclesInGroup;
+
+    @Version
     private Integer version;
-    private LocalDateTime creationDate;
-    private LocalDateTime lastUpdateDate;
+
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdDate;
+    @LastModifiedDate
+    private LocalDateTime lastModifiedDate;
 }
