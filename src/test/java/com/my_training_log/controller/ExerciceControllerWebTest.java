@@ -15,8 +15,6 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 
-
-import javax.print.attribute.standard.Media;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -39,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = ExerciceController.class, excludeAutoConfiguration = {
         JpaAuditingConfig.class
 })
-class ExerciceControllerTest {
+class ExerciceControllerWebTest {
 
     @Autowired
     MockMvc mockMvc;
@@ -76,23 +75,49 @@ class ExerciceControllerTest {
     }
 
     @Test
-    void listAllExercices() throws Exception {
-        List <ExerciceDto> testListExercices = buildListExercicesForTest();
+    void listExercices() throws Exception {
+        List <ExerciceDto> testExercicesList = buildListExercicesForTest();
 
-        given(exerciceService.listAllExercices()).willReturn(testListExercices);
+        given(exerciceService.listAllExercices()).willReturn(testExercicesList);
 
         mockMvc.perform(get(ExerciceController.EXERCICE_PATH)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(testListExercices.size()));
+                .andExpect(jsonPath("$.length()").value(testExercicesList.size()));
     }
+
+    @Test
+    void ListExercicesByReferenceMuscleGroupName() throws Exception {
+        List <ExerciceDto> testExercicesList = buildListExercicesForTest();
+        given(exerciceService.listExercicesByReferenceMuscleGroupName(any(String.class))).willReturn(Arrays.asList(testExercicesList.get(0)));
+
+        mockMvc.perform(get(ExerciceController.EXERCICE_PATH)
+                        .param("muscleGroupName", "Chest")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(1));
+    }
+
+    @Test
+    void ListExercicesByReferenceMuscleGroupNameNotFound() throws Exception {
+        given(exerciceService.listExercicesByReferenceMuscleGroupName(any(String.class))).willThrow(NotFoundException.class);
+
+        mockMvc.perform(get(ExerciceController.EXERCICE_PATH)
+                        .param("muscleGroupName", "NotFoundMuscleGroup")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+
 
 
     @Test
     void getExerciceById () throws Exception {
         ExerciceDto testExercice = buildListExercicesForTest().get(0);
-        given(exerciceService.getExerciceByID(any(UUID.class))).willReturn(testExercice);
+        given(exerciceService.getExerciceById(any(UUID.class))).willReturn(testExercice);
 
         mockMvc.perform(get(ExerciceController.EXERCICE_PATH_ID, UUID.randomUUID())
                         .accept(MediaType.APPLICATION_JSON))
@@ -103,7 +128,7 @@ class ExerciceControllerTest {
 
     @Test
     void getExerciceByIdNotFound () throws Exception {
-        given(exerciceService.getExerciceByID(any(UUID.class))).willThrow(new NotFoundException());
+        given(exerciceService.getExerciceById(any(UUID.class))).willThrow(new NotFoundException());
 
         mockMvc.perform(get(ExerciceController.EXERCICE_PATH_ID, UUID.randomUUID())
                         .accept(MediaType.APPLICATION_JSON))
@@ -190,7 +215,8 @@ class ExerciceControllerTest {
 
     @Test
     void deleteExerciceByIdNotFound() throws Exception {
-        given(exerciceService.deleteExerciceById(any(UUID.class))).willThrow(NotFoundException.class);
+        //doThrow if the method return nothing
+        doThrow(new NotFoundException()).when(exerciceService).deleteExerciceById(any(UUID.class));
 
         mockMvc.perform(delete(ExerciceController.EXERCICE_PATH_ID, UUID.randomUUID())
                         .accept(MediaType.APPLICATION_JSON)

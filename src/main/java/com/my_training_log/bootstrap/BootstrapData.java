@@ -148,15 +148,6 @@ public class BootstrapData implements CommandLineRunner {
                 .muscleGroup(forearms)
                 .build();
 
-        // Link muscles to groups
-        chest.setMuscles(Arrays.asList(pectoralisMajorClavicularHead, pectoralisMajorSternalHead, pectoralisMinor));
-        shoulders.setMuscles(Arrays.asList(frontDeltoid, lateralDeltoid, rearDeltoid));
-        triceps.setMuscles(Arrays.asList(longHeadOfTheTriceps, lateralHeadOfTheTriceps, medialHeadOfTheTriceps));
-        dorsal.setMuscles(Arrays.asList(latissimusDorsi, teresMajor, teresMinor));
-        trapeziusAndRhomboids.setMuscles(Arrays.asList(upperTrapezius, middleTrapezius, lowerTrapezius, rhomboidMajor, rhomboidMinor));
-        bicepsAndBrachial.setMuscles(Arrays.asList(longHeadOfBiceps, shortHeadOfBiceps, brachialis));
-        forearms.setMuscles(Arrays.asList(brachioradialis, flexorCarpiRadialis, flexorCarpiUlnaris, flexorDigitorumSuperficialis, extensorCarpiRadialisLongus, extensorCarpiUlnaris));
-
         // Save MuscleGroups first (with cascade if set), then muscles
         muscleGroupRepository.saveAll(Arrays.asList(
                 chest, shoulders, triceps, dorsal,

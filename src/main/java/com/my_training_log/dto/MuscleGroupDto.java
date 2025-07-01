@@ -16,9 +16,6 @@ public class MuscleGroupDto {
     @NotBlank
     private String name;
 
-    @NotBlank
-    private List <MuscleDto> muscles;
-
     private Integer version;
     private LocalDateTime creationDate;
     private LocalDateTime lastUpdateDate;

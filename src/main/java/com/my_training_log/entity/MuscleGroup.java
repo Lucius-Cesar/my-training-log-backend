@@ -32,10 +32,6 @@ public class MuscleGroup {
     @Column(unique = true)
     private String name;
 
-
-    @OneToMany(mappedBy = "muscleGroup")
-    private List<Muscle> muscles;
-
     @Version
     private Integer version;
 

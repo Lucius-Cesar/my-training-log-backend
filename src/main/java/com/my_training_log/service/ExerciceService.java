@@ -7,8 +7,9 @@ import java.util.UUID;
 
 public interface ExerciceService {
     List<ExerciceDto> listAllExercices();
-    ExerciceDto getExerciceByID(UUID id);
+    List<ExerciceDto> listExercicesByReferenceMuscleGroupName(String muscleGroupName);
+    ExerciceDto getExerciceById(UUID id);
     ExerciceDto updateExerciceById(UUID id, ExerciceDto exercice);
     ExerciceDto createExercice(ExerciceDto exercice);
-    ExerciceDto deleteExerciceById(UUID id);
+    void deleteExerciceById(UUID id);
 }
