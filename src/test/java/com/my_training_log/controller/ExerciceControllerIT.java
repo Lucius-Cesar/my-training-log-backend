@@ -15,11 +15,12 @@ import org.springframework.test.annotation.Rollback;
 import java.util.List;
 import java.util.UUID;
 
+import static com.my_training_log.utils.UrlUtils.extractIdFromLocationHeader;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-class ExerciceControllerIntegrationTest {
+class ExerciceControllerIT {
 
     @Autowired
     ExerciceController exerciceController;
@@ -151,11 +152,8 @@ class ExerciceControllerIntegrationTest {
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(responseEntity.getHeaders().getLocation()).isNotNull();
 
-        String location = responseEntity.getHeaders().getLocation().toString();
-        System.out.println(location);
-        String[] parts = location.split("/");
-        String idStr = parts[parts.length - 1];
-        UUID id = UUID.fromString(idStr);
+
+        UUID id = extractIdFromLocationHeader(responseEntity);
 
 
         ResponseEntity<ExerciceDto> created = exerciceController.getExerciceById(id);

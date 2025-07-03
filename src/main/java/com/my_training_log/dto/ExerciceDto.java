@@ -4,6 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 
 import java.time.LocalDateTime;
@@ -30,7 +32,8 @@ public class ExerciceDto {
     private List <MuscleDto> specificMusclesInGroup	;
 
     private Integer version;
-    private LocalDateTime creationDate;
-    private LocalDateTime lastUpdateDate;
+
+    private LocalDateTime createdDate;
+    private LocalDateTime lastModifiedDate;
 
 }

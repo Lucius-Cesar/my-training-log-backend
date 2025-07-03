@@ -2,6 +2,7 @@ package com.my_training_log.controller;
 import com.my_training_log.exception.NotFoundException;
 import jakarta.transaction.TransactionalException;
 import jakarta.validation.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -29,6 +30,26 @@ public class CustomErrorsController {
                 .collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorsList);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity handleJpaValidationException(ConstraintViolationException ex) {
+        Map<String, Object> body = new HashMap<>();
+        List<String> errorsList = ex.getConstraintViolations().stream()
+                .map(cv -> cv.getPropertyPath() + ": " + cv.getMessage())
+                .collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorsList);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity handleIntegrityViolationException(DataIntegrityViolationException ex) {
+        Map<String, Object> body = new HashMap<>();
+        String error = ex.getRootCause() != null ?
+                "Database constraint violation: " + ex.getRootCause().getMessage() :
+                "Data integrity error occurred.";
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
 

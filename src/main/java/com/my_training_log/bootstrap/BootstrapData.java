@@ -35,6 +35,14 @@ public class BootstrapData implements CommandLineRunner {
         MuscleGroup trapeziusAndRhomboids = MuscleGroup.builder().name("Trapezius & rhomboids").build();
         MuscleGroup bicepsAndBrachial = MuscleGroup.builder().name("Biceps & brachial").build();
         MuscleGroup forearms = MuscleGroup.builder().name("Forearms").build();
+        MuscleGroup quadriceps = MuscleGroup.builder().name("Quadriceps").build();
+        MuscleGroup adductors = MuscleGroup.builder().name("Adductors").build();
+        MuscleGroup glutes = MuscleGroup.builder().name("Glutes").build();
+        MuscleGroup harmstrings = MuscleGroup.builder().name("Harmstrings").build();
+        MuscleGroup calves = MuscleGroup.builder().name("Calves").build();
+
+
+
 
 // Muscles – version builder() + build()
         Muscle pectoralisMajorClavicularHead = Muscle.builder()
@@ -151,7 +159,8 @@ public class BootstrapData implements CommandLineRunner {
         // Save MuscleGroups first (with cascade if set), then muscles
         muscleGroupRepository.saveAll(Arrays.asList(
                 chest, shoulders, triceps, dorsal,
-                trapeziusAndRhomboids, bicepsAndBrachial, forearms
+                trapeziusAndRhomboids, bicepsAndBrachial, forearms,
+                quadriceps,adductors, harmstrings, calves, glutes
         ));
 
         // Save all muscles

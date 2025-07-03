@@ -36,6 +36,7 @@ public class Muscle{
     private String name;
 
     @ManyToOne
+    @NotNull
     private MuscleGroup muscleGroup;
 
     @Version

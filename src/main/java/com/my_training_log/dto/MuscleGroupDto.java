@@ -17,6 +17,6 @@ public class MuscleGroupDto {
     private String name;
 
     private Integer version;
-    private LocalDateTime creationDate;
-    private LocalDateTime lastUpdateDate;
+    private LocalDateTime createdDate;
+    private LocalDateTime lastModifiedDate;
 }

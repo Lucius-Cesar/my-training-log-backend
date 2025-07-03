@@ -21,8 +21,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.eq;
+
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
@@ -119,7 +118,7 @@ class ExerciceControllerWebTest {
         ExerciceDto testExercice = buildListExercicesForTest().get(0);
         given(exerciceService.getExerciceById(any(UUID.class))).willReturn(testExercice);
 
-        mockMvc.perform(get(ExerciceController.EXERCICE_PATH_ID, UUID.randomUUID())
+        mockMvc.perform(get(ExerciceController.EXERCICE_PATH_ID, testExercice.getId())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -146,7 +145,9 @@ class ExerciceControllerWebTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(testExercice)))
                 .andExpect(status().isCreated())
-                .andExpect(header().exists("Location"));
+                .andExpect(header().exists("Location"))
+                .andExpect(header().string("Location", ExerciceController.EXERCICE_PATH + "/" + testExercice.getId()));
+
     }
 
     @Test

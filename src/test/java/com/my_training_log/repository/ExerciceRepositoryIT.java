@@ -12,10 +12,12 @@ import org.springframework.test.annotation.Rollback;
 
 import java.util.Arrays;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-public class ExerciceRepositoryIntegrationTest {
+public class ExerciceRepositoryIT {
 
     @Autowired
     ExerciceRepository exerciceRepository;
@@ -23,11 +25,17 @@ public class ExerciceRepositoryIntegrationTest {
     @Autowired
     ExerciceMapper exerciceMapper;
 
+    @Test
+    void getExerciceById(){
+        Exercice testExercice = exerciceRepository.findAll().get(0);
+
+        System.out.println(testExercice.getCreatedDate());
+    }
 
     @Test
     @Transactional
     @Rollback
-    void createExerciceJpaFieldsRequired() {
+    void createExerciceFieldsRequired() {
         Exercice invalidExercice = new Exercice();
         invalidExercice.setName(null);
         invalidExercice.setReferenceMuscleGroups(null);
@@ -43,7 +51,7 @@ public class ExerciceRepositoryIntegrationTest {
     @Test
     @Transactional
     @Rollback
-    void updateExerciceJpaFieldsRequired() {
+    void updateExerciceFieldsRequired() {
         Exercice testExercice = exerciceRepository.findAll().get(0);
         testExercice.setName(null);
         testExercice.setReferenceMuscleGroups(null);
@@ -53,6 +61,14 @@ public class ExerciceRepositoryIntegrationTest {
         assertThrows(ConstraintViolationException.class, () -> {
             exerciceRepository.saveAndFlush(testExercice); // forces flush and validation
         });
+    }
+
+    @Test
+    @Transactional
+    void findByReferenceMuscleGroupsContaining(){
+        Exercice testExercice = exerciceRepository.findAll().get(0);
+        MuscleGroup testMuscleGroup = testExercice.getReferenceMuscleGroups().get(0);
+        assertThat(exerciceRepository.findByReferenceMuscleGroupsContaining(testMuscleGroup)).contains(testExercice);
     }
 
 }

@@ -20,6 +20,6 @@ public class MuscleDto {
     private MuscleGroupDto muscleGroup;
 
     private Integer version;
-    private LocalDateTime creationDate;
-    private LocalDateTime lastUpdateDate;
+    private LocalDateTime createdDate;
+    private LocalDateTime lastModifiedDate;
 }
